@@ -69,8 +69,7 @@ In our lab we will only create and assign two VLANs inside Era and the DHCP dist
 
 .. note::
 
-	We are assuming that the following IPs are available for use.
-  If you are unsure please use a IP scanner `tool <https://angryip.org/download/>`_ to choose 4 blocks of 5 IP addresses. This will be enough for our Oracle RAC 2 node cluster.
+  We are assuming that the following IPs are available for use. If you are unsure please use a IP scanner `tool <https://angryip.org/download/>`_ to choose 4 blocks of 5 IP addresses. This will be enough for our Oracle RAC 2 node cluster.
 
 .. list-table::
   :widths: 25 25 10 40
