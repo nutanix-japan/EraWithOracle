@@ -46,13 +46,64 @@ Oracle RAC Cluster has the following Networking interfaces in at least two diffe
 
 The Private and Public Service connections cannot be in the same VLAN. Larger productions environments may have different VLANs for each of the component's connectivity.
 
+Each cluster is configured with 2 VLANs which can be used for VMs:
+
+.. list-table::
+  :widths: 25 25 10 40
+  :header-rows: 1
+
+  * - Network Name
+    - Network Address
+    - VLAN
+    - DHCP Scope
+  * - Primary
+    - 10.42.\ *XYZ*\ .1/25
+    - 0
+    - 10.42.\ *XYZ*\ .50-10.42.\ *XYZ*\ .124
+  * - Secondary
+    - 10.42.\ *XYZ*\ .129/25
+    - *XYZ1*
+    - 10.42.\ *XYZ*\ .132-10.42.\ *XYZ*\ .253
+
 In our lab we will only create and assign two VLANs inside Era and the DHCP distribution to be managed by Era. This would be the equivalent of the network administration providing IP blocks to be exclusively used for Oracle RAC servers.
+
+.. note::
+
+	We are assuming that the following IPs are available for use.
+  If you are unsure please use a IP scanner `tool <https://angryip.org/download/>`_ to choose 4 blocks of 5 IP addresses. This will be enough for our Oracle RAC 2 node cluster.
+
+.. list-table::
+  :widths: 25 25 10 40
+  :header-rows: 1
+
+  * - Network Name
+    - Network Address
+    - VLAN
+    - DHCP Scope
+  * - XYZ-RAC-Private
+    - 10.42.\ *XYZ*\ .1/25
+    - 0
+    - 10.42.\ *XYZ*\ .100-10.42.\ *XYZ*\ .105
+  * - XYZ-RAC-Public
+    - 10.42.\ *XYZ*\ .129/25
+    - *XYZ1*
+    - 10.42.\ *XYZ*\ .140-10.42.\ *XYZ*\ .145
+  * - XYZ-RAC-Scan
+    - 10.42.\ *XYZ*\ .129/25
+    - *XYZ1*
+    - 10.42.\ *XYZ*\ .150-10.42.\ *XYZ*\ .155
+  * - XYZ-RAC-ClientAccess
+    - 10.42.\ *XYZ*\ .129/25
+    - *XYZ1*
+    - 10.42.\ *XYZ*\ .160-10.42.\ *XYZ*\ .265
+
+#. In Prism Element
 
 #. In Era GUI click **Menu > Administration > Networks**
 
 #. Click on **Add**
 
-#. 
+#.
 
 
 
