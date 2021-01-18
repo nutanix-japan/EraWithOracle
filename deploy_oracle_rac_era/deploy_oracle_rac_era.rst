@@ -69,6 +69,7 @@ Each HPOC cluster is pre-configured with 2 VLANs which can be used for VMs: This
     - 10.42.\ *XYZ*\ .132-10.42.\ *XYZ*\ .253
 
 In our lab we will only create and assign two VLANs inside Era and the DHCP distribution to be managed by Era.
+
 .. note::
 
   We are assuming that the following IPs are available for use. If you are unsure please use a IP scanner `tool <https://angryip.org/download/>`_ to choose 2 blocks of 5 IP addresses. This will be enough for our Oracle RAC 2 node cluster.
