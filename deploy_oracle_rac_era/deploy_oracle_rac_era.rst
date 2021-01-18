@@ -179,6 +179,56 @@ Now let's create the XYZ-RAC-Public-Scan-CA network in Era
 
 #. Click on **Add**
 
+**Create Oracle RAC Network Profile**
+
+#. In Era Menu, select **Profiles > Network**
+
+#. Click on **+ Create > Oracle > RAC Database**
+
+#. Fill out the following fields to configure network profile to use for Oracle RAC provisioning
+
+   - **Name** - Oracle
+   - **Description** - Default Oracle RAC Network Profile
+   - **Nutanix Cluster** - EraCluster
+   - **Public Service vLAN** - XYZ-RAC-Private
+   - **Virtual Service vLAN** - XYZ-RAC-Public-SCAN-CA
+   - **Private Service vLAN** - XYZ-RAC-Public-SCAN-CA
+   - **Scan Service vLAN** - XYZ-RAC-Public-SCAN-CA
+
+   .. figure:: images/rac4.png
+
+#. Click on **Create**
+
+Create Oracle RAC Software Profile
+++++++++++++++++++++++++++++++++++++
+
+In this section we will create Era software profile which we will use to deploy Oracle RAC database servers.
+
+#. #. In Era Menu, select **Profiles**
+
+#. Click on **Software > Add**
+
+#. Click on **+ Create > Oracle > RAC Database**
+
+#. Fill out the following fields to configure software profile to use for Oracle RAC provisioning
+
+   - **Name** - Oracle
+   - **Description** - Default Oracle RAC Software Profile
+   - **Profile Name** - XYZ-Oracle-RAC
+   - **Software Profile Version Name** - Automatically created
+   - **Nutanix Cluster** - EraCluster
+   - Choose the Oracle Single Instance source profile previously created - Oracle19cSource
+
+   .. figure:: images/rac5.png
+
+#. Click **Next**
+
+#. Click on **Create**
+
+The new profile will take at least 5 minutes to get created. You can monitor progress in the **Era > Menu > Operations** page
+
+.. figure:: images/rac6.png
+
 
 Create Oracle RAC Cluster with Era
 ++++++++++++++++++++++++++++++++++++
