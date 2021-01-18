@@ -190,11 +190,11 @@ Now let's create the XYZ-RAC-Public-Scan-CA network in Era
    - **Name** - XYZ_ORACLE_RAC_NETWORK_PROFILE
    - **Description** - Default Oracle RAC Network Profile
    - **Nutanix Cluster** - EraCluster
-   - **Public Service vLAN** - XYZ-RAC-Private
+   - **Public Service vLAN** - XYZ-RAC-Public-SCAN-CA
    - **Virtual Service vLAN** - XYZ-RAC-Public-SCAN-CA
-   - **Private Service vLAN** - XYZ-RAC-Public-SCAN-CA
    - **Scan Service vLAN** - XYZ-RAC-Public-SCAN-CA
-
+   - **Private Service vLAN** - XYZ-RAC-Private
+   
    .. figure:: images/rac4.png
 
 #. Click on **Create**
