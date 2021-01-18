@@ -194,7 +194,7 @@ Now let's create the XYZ-RAC-Public-Scan-CA network in Era
    - **Virtual Service vLAN** - XYZ-RAC-Public-SCAN-CA
    - **Scan Service vLAN** - XYZ-RAC-Public-SCAN-CA
    - **Private Service vLAN** - XYZ-RAC-Private
-   
+
    .. figure:: images/rac4.png
 
 #. Click on **Create**
@@ -204,7 +204,7 @@ Create Oracle RAC Software Profile
 
 In this section we will create Era software profile which we will use to deploy Oracle RAC database servers.
 
-#. #. In Era Menu, select **Profiles**
+#. In Era Menu, select **Profiles**
 
 #. Click on **Software > Add**
 
@@ -229,6 +229,26 @@ The new profile will take at least 5 minutes to get created. You can monitor pro
 
 .. figure:: images/rac6.png
 
+Create Oracle RAC Compute Profile
+++++++++++++++++++++++++++++++++++++
+
+In this section we will create Era compute profile which we will use to deploy Oracle RAC database servers.
+
+#. In Era Menu, select **Profiles**
+
+#. Click on **Compute > Add**
+
+#. Click on **+ Create**
+
+#. Fill out the following fields to compute profile to use for Oracle RAC provisioning
+
+   - **Name** - XYZ_ORACLE_RAC_COMPUTE
+   - **Description** - XYZ Compute profile
+   - **vCPUs** - 8
+   - **Cores per CPU** - 1
+   - **Memory (GiB)** - 16
+
+  .. figure:: images/rac7.png
 
 Create Oracle RAC Cluster with Era
 ++++++++++++++++++++++++++++++++++++
