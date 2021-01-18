@@ -187,8 +187,8 @@ Now let's create the XYZ-RAC-Public-Scan-CA network in Era
 
 #. Fill out the following fields to configure network profile to use for Oracle RAC provisioning
 
-   - **Name** - Oracle
-   - **Description** - Default Oracle RAC Network Profile
+     - **Name** - XYZ_ORACLE_RAC_NETWORK_PROFILE
+     - **Description** - Default Oracle RAC Network Profile
    - **Nutanix Cluster** - EraCluster
    - **Public Service vLAN** - XYZ-RAC-Private
    - **Virtual Service vLAN** - XYZ-RAC-Public-SCAN-CA
