@@ -44,24 +44,27 @@ Oracle RAC Cluster has the following Networking interfaces in at least two diffe
 - Public Service
 - Scan Service
 
-The Private and Public Service connections cannot be in the same VLAN. Larger productions environments may have different VLANs for each of the component's connectivity.
+The Private Service connections cannot be in the same VLAN as the others.
 
-Each cluster is configured with 2 VLANs which can be used for VMs:
+Each HPOC cluster is pre-configured with 2 VLANs which can be used for VMs: This is sufficient for our Oracle RAC implementation. Larger productions environments may have different VLANs for each of the component's connectivity.
 
 .. list-table::
-  :widths: 25 25 10 40
+  :widths: 25 25 25 10 30
   :header-rows: 1
 
   * - Network Name
     - Network Address
+    - Subnet Mask
     - VLAN
     - DHCP Scope
   * - Primary
     - 10.42.\ *XYZ*\ .1/25
+    - 255.255.255.128
     - 0
     - 10.42.\ *XYZ*\ .50-10.42.\ *XYZ*\ .124
   * - Secondary
     - 10.42.\ *XYZ*\ .129/25
+    - 255.255.255.128
     - *XYZ1*
     - 10.42.\ *XYZ*\ .132-10.42.\ *XYZ*\ .253
 
@@ -69,34 +72,65 @@ In our lab we will only create and assign two VLANs inside Era and the DHCP dist
 
 .. note::
 
-  We are assuming that the following IPs are available for use. If you are unsure please use a IP scanner `tool <https://angryip.org/download/>`_ to choose 4 blocks of 5 IP addresses. This will be enough for our Oracle RAC 2 node cluster.
+  We are assuming that the following IPs are available for use. If you are unsure please use a IP scanner `tool <https://angryip.org/download/>`_ to choose 2 blocks of 5 IP addresses. This will be enough for our Oracle RAC 2 node cluster.
+
+
+**RAC Network Design Visualisation**
+
+.. figure:: images/rac1.png
+
+**RAC IP Requirements**
+
+We will need the following number of IPs for a two node Oracle RAC Clusters
 
 .. list-table::
-  :widths: 25 25 10 40
+  :widths: 10 10 10 10
+  :header-rows: 1
+
+  * - Network Name
+    - No. of RAC Nodes
+    - No. of IPs per Node
+    - Total IPs required
+  * - Public
+    - 2
+    - 1
+    - 2
+  * - Private + Scan + CA
+    - 2
+    - 3
+    - 6
+  * - Totals
+    -
+    -
+    - 8
+
+Based on these design requirements we will create networks in Prism Central and then configure DHCP pool in Era. We will configure a larger block to make sure it will suffice a future deployment for testing.
+
+.. list-table::
+  :widths: 25 20 20 10 30 15
   :header-rows: 1
 
   * - Network Name
     - Network Address
+    - Subnet Mask
     - VLAN
     - DHCP Scope
+    - No. of IPs
   * - XYZ-RAC-Private
     - 10.42.\ *XYZ*\ .1/25
+    - 255.255.255.128
     - 0
-    - 10.42.\ *XYZ*\ .100-10.42.\ *XYZ*\ .105
-  * - XYZ-RAC-Public
+    - 10.42.\ *XYZ*\ .101-10.42.\ *XYZ*\ .105
+    - 5
+  * - XYZ-RAC-Public-Scan-CA
     - 10.42.\ *XYZ*\ .129/25
+    - 255.255.255.128
     - *XYZ1*
-    - 10.42.\ *XYZ*\ .140-10.42.\ *XYZ*\ .145
-  * - XYZ-RAC-Scan
-    - 10.42.\ *XYZ*\ .129/25
-    - *XYZ1*
-    - 10.42.\ *XYZ*\ .150-10.42.\ *XYZ*\ .155
-  * - XYZ-RAC-ClientAccess
-    - 10.42.\ *XYZ*\ .129/25
-    - *XYZ1*
-    - 10.42.\ *XYZ*\ .160-10.42.\ *XYZ*\ .265
+    - 10.42.\ *XYZ*\ .141-10.42.\ *XYZ*\ .160
+    - 20
 
-#. In Prism Element
+
+#. In Prism Element, click **Settings > Networking**
 
 #. In Era GUI click **Menu > Administration > Networks**
 
@@ -115,7 +149,7 @@ In this exercise you will deploy a fresh Oracle RAC database using your *Initial
 
 #. Select **Databases** from the dropdown menu and **Sources** from the lefthand menu.
 
-#. Click **+ Provision > Single Node Database**.
+#. Click **+ Provision > RAC Database**.
 
 #. In the **Provision a Database** wizard, fill out the following fields to configure the Database Server:
 
