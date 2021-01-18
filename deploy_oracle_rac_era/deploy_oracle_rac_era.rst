@@ -34,8 +34,8 @@ Each of the Oracle RAC cluster building block is implemented using Era Profiles 
 
 We will now quickly create all these building blocks as Era Profiles.
 
-Create Era Network Profile
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Create Era Network Profiles for Oracle RAC
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Oracle RAC Cluster has the following Networking interfaces in at least two different managed VLANs. These VLANs need to be able to provide IPs for the clients requesting it.
 
