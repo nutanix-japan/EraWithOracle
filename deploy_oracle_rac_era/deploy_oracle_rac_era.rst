@@ -77,7 +77,7 @@ In our lab we will only create and assign two VLANs inside Era and the DHCP dist
 
 **RAC Network Design Visualisation**
 
-.. figure:: images/rac1.png
+.. figure:: images/rac2.png
 
 **RAC IP Requirements**
 
@@ -161,7 +161,7 @@ Now we will create corresponding networks in Era and assign DHCP pool. This woul
 
 #. Enter **Gateway, Subnet Mask, Primary DNS, First Address** and **Last Address** as shown below. Refer the above table for values.
 
-   .. figure:: images/rac2.png
+   .. figure:: images/rac2.png 
 
 #. Click on **Add**
 
