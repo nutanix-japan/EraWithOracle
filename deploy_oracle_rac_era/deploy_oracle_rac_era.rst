@@ -68,8 +68,7 @@ Each HPOC cluster is pre-configured with 2 VLANs which can be used for VMs: This
     - *XYZ1*
     - 10.42.\ *XYZ*\ .132-10.42.\ *XYZ*\ .253
 
-In our lab we will only create and assign two VLANs inside Era and the DHCP distribution to be managed by Era. This would be the equivalent of the network administration providing IP blocks to be exclusively used for Oracle RAC servers.
-
+In our lab we will only create and assign two VLANs inside Era and the DHCP distribution to be managed by Era.
 .. note::
 
   We are assuming that the following IPs are available for use. If you are unsure please use a IP scanner `tool <https://angryip.org/download/>`_ to choose 2 blocks of 5 IP addresses. This will be enough for our Oracle RAC 2 node cluster.
@@ -129,17 +128,55 @@ Based on these design requirements we will create networks in Prism Central and 
     - 10.42.\ *XYZ*\ .141-10.42.\ *XYZ*\ .160
     - 20
 
+**Create Networks in Prism Element**
 
-#. In Prism Element, click **Settings > Networking**
+#. In Prism Element, click **Settings > Network Configuration**
 
-#. In Era GUI click **Menu > Administration > Networks**
+#. Click on **+ Create Network**
+
+#. Enter **XYZ-RAC-Private** as Network Name and **0** as VLAN ID
+
+#. Click on **Save**
+
+#. Click on **+ Create Network**
+
+#. Enter **XYZ-RAC-Public-Scan-CA** as Network Name and **XYZ1** as VLAN ID (for example: 71 is the VLAN ID)
+
+#. Click on **Save**
+
+**Create Networks in Era**
+
+Now we will create corresponding networks in Era and assign DHCP pool. This would be the equivalent of the network administration providing IP blocks to be exclusively used for Oracle RAC servers.
+
+#. Switch your browser to Era
+
+#. In Era Menu, select **Administration**
+
+#. Click on **Networks > Add**
+
+#. Choose **XYZ-RAC-Private**
+
+#. Select **Manage IP Address Pool**
+
+#. Enter **Gateway, Subnet Mask, Primary DNS, First Address** and **Last Address** as shown below. Refer the above table for values.
+
+.. figure:: images/rac2.png
 
 #. Click on **Add**
 
-#.
+Now let's create the XYZ-RAC-Public-Scan-CA network in Era
 
+#. Click on **Networks > Add**
 
+#. Choose **XYZ-RAC-Public-SCAN-CA**
 
+#. Select **Manage IP Address Pool**
+
+#. Enter **Gateway, Subnet Mask, Primary DNS, First Address** and **Last Address** as shown below. Refer the above table for values.
+
+.. figure:: images/rac3.png
+
+#. Click on **Add**
 
 
 Create Oracle RAC Cluster with Era
