@@ -161,7 +161,7 @@ Now we will create corresponding networks in Era and assign DHCP pool. This woul
 
 #. Enter **Gateway, Subnet Mask, Primary DNS, First Address** and **Last Address** as shown below. Refer the above table for values.
 
-.. figure:: images/rac2.png
+   .. figure:: images/rac2.png
 
 #. Click on **Add**
 
@@ -175,7 +175,7 @@ Now let's create the XYZ-RAC-Public-Scan-CA network in Era
 
 #. Enter **Gateway, Subnet Mask, Primary DNS, First Address** and **Last Address** as shown below. Refer the above table for values.
 
-.. figure:: images/rac3.png
+   .. figure:: images/rac3.png
 
 #. Click on **Add**
 
