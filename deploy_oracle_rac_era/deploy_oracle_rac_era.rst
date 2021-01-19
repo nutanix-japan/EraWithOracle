@@ -343,4 +343,6 @@ Now that we have all the building blocks (profiles) necessary for creating a Ora
 
    	The provisioning might take up to an hour.
 
-   .. figure:: images/rac11.png 
+   .. figure:: images/rac11.png
+
+We have succesfully deployed Oracle RAC database and VMs using simple to use Era software. Without Era, this process would have take many more hours or days.
