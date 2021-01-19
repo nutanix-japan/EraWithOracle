@@ -91,11 +91,11 @@ We will need the following number of IPs for a two node Oracle RAC Clusters
     - No. of RAC Nodes
     - No. of IPs per Node
     - Total IPs required
-  * - Public
+  * - Private
     - 2
     - 1
     - 2
-  * - Private + Scan + CA
+  * - Public + Scan + CA
     - 2
     - 3
     - 6
