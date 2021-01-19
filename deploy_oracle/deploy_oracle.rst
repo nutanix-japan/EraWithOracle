@@ -21,14 +21,14 @@ This VM is running Oracle 19c with April PSU patches applied.
 
    .. figure:: images/1.png
 
-#. Select the checkbox for *UserXX*\ **-Oracle19cSource**, and click **Actions > Clone**.
+#. Select the checkbox for **-Oracle19cSource**, and click **Actions > Clone**.
 
    .. figure:: images/1b.png
 
 #. Fill out the following fields:
 
    - **Number Of Clones** - 1
-   - **Name** - *UserXX*\ **-Oracle19cSource-Patched**
+   - **Name** - *UserXX*\ **-Oracle19cSource**
    - **Description** - (Optional) Description for your VM.
    - **vCPU(s)** - 2
    - **Number of Cores per vCPU** - 1

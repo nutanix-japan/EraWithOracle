@@ -212,10 +212,9 @@ In this section we will create Era software profile which we will use to deploy 
 
 #. Fill out the following fields to configure software profile to use for Oracle RAC provisioning
 
-   - **Name** - Oracle
-   - **Description** - Default Oracle RAC Software Profile
-   - **Profile Name** - XYZ-Oracle-RAC
-   - **Software Profile Version Name** - Automatically created
+   - **Profile Name** - XYZ_ORACLE_RAC_SOFTWARE_PROFILE
+     - **Description** - Default Oracle RAC Software Profile
+   - **Software Profile Version Name** - Automatically created by Era
    - **Nutanix Cluster** - EraCluster
    - Choose the Oracle Single Instance source profile previously created - Oracle19cSource
 
@@ -248,37 +247,100 @@ In this section we will create Era compute profile which we will use to deploy O
    - **Cores per CPU** - 1
    - **Memory (GiB)** - 16
 
-  .. figure:: images/rac7.png
+   .. figure:: images/rac7.png
+
+Create Oracle RAC Compute Profile
+++++++++++++++++++++++++++++++++++++
+
+In this section we will create Era database profile which we will use to deploy Oracle RAC database servers. This would
+
+#. In Era Menu, select **Profiles**
+
+#. Click on **Database Parameters > Add**
+
+#. Select **Oracle**
+
+#. Fill out the following fields to compute profile to use for Oracle RAC provisioning
+
+   - **Name** - XYZ_RAC_DB_PROFILE
+   - **Description** - XYZ RAC Default Profile
+
+#. Leave all the options as it is. You are able to fill your own desired values. However, for this exercise we will not modify values.
+
+   .. figure:: images/rac8.png
+
+#. Click on **+ Create**
 
 Create Oracle RAC Cluster with Era
 ++++++++++++++++++++++++++++++++++++
 
-In this exercise you will deploy a fresh Oracle RAC database using your *Initials*\ **_ORACLE_19C** 1.0 Software Profile.
+Now that we have all the building blocks (profiles) necessary for creating a Oracle RAC database using Era, we will deploy a Oracle RAC database using your *Initials*\ **_ORACLE_19C** 1.0 Software Profile.
 
 #. Select **Databases** from the dropdown menu and **Sources** from the lefthand menu.
 
 #. Click **+ Provision > RAC Database**.
 
-#. In the **Provision a Database** wizard, fill out the following fields to configure the Database Server:
+#. Select **Create New Cluster**
 
-   - **Engine** - Oracle
-   - **Database Server** - Create New Server
-   - **Database Server Name** - *Initials*\ _oracle_prod
+#. In the **Provision a Oracle RAC Database** wizard, fill out the following fields to configure the Oracle RAC database:
+
+   - **Server Cluster Name** - XYZRAC
    - **Description** - (Optional)
-   - **Software Profile** - *Initials*\ _ORACLE_19C
-   - **Compute Profile** - ORACLE_SMALL
-   - **Network Profile** - Primary_ORACLE_NETWORK
-   - Select **Enable High Availability**
-   - **SYS ASM Password** - oracle
-   - **SSH Public Key for Node Access** - Select **Text**
+   - **Nutanix Cluster** - EraCluster
+   - **Network Profile** - XYZ_ORACLE_RAC_NETWORK_PROFILE
+   - **Database Server VM Name Prefix** - XYZRAC
+   - **Software Profile** - XYZ_ORACLE_RAC_SOFTWARE_PROFILE
+   - **Compute Profile** - XYZ_ORACLE_RAC_COMPUTE
+   - **SYS ASM Password** - (desired password)
+   - **ASM Driver** - None
+   - **SSH Public Key for Node Access** - Select **Text** and paste the following public key
 
    ::
 
       ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAii7qFDhVadLx5lULAG/ooCUTA/ATSmXbArs+GdHxbUWd/bNGZCXnaQ2L1mSVVGDxfTbSaTJ3En3tVlMtD2RjZPdhqWESCaoj2kXLYSiNDS9qz3SK6h822je/f9O9CzCTrw2XGhnDVwmNraUvO5wmQObCDthTXc72PcBOd6oa4ENsnuY9HtiETg29TZXgCYPFXipLBHSZYkBmGgccAeY9dq5ywiywBJLuoSovXkkRJk3cd7GyhCRIwYzqfdgSmiAMYgJLrz/UuLxatPqXts2D8v1xqR9EPNZNzgd4QHK4of1lqsNRuz2SxkwqLcXSw0mGcAL8mIwVpzhPzwmENC5Orw==
 
+   .. figure:: images/rac9.png
+
+#. Click **Next**
+
+#. In the **RAC Topology** wizard, fill out the following field
+
+   - **SCAN Name** - XYZRACSCAN
+
+#. Click on **Next**
+
+#. In the **Database** wizard, fill out the following fields
+
+   - **Database Name** - XYZRACDB1
+   - **Description** - (Optional)
+   - **SID** - DB1SID
+   - **Global Database Name** - RACDB1NTNX
+   - **SYS and SYSTEM Password**  - (Your desired password)
+   - **Size (GiB)** - 1000
+   - **Fast Recovery Area Size (GiB)** - 200
+   - **Database Parameter Profile** - XYZ_RAC_DB_PROFILE
+   - **Character Set** - AL32UTF
+   - **National Character Set** - AL16UTF16
+   - **Encryption** - (Leave unchecked)
+   - **Pre-Post Commands** - (Leave blank)
+
+   .. figure:: images/rac10.png
+
+
+#. Click on **Next**
+
+#. In the **Time Machine** wizard, fill out the following fields
+
+   - **Name** - XYZRACDB1_TM
+   - **Description** - (Optional)
+   - **SLA** - DEFAULT_OOB_BRONZE_SLA (do not select BRASS SLA)
+
+#. Click on **Provision**
+
+#. Go to **Menu > Operations** to monitor the provisioning
 
    .. note::
 
-         By selecting Enable High Availability, Oracle Grid is configured as part of the deployment and Oracle Automatic Storage Management (ASM) is used for volume management. Without High Availability enabled, Linux LVM and file systems would be used for database storage. Grid and ASM are required for clustered Oracle RAC deployments.
+   	The provisioning might take up to an hour.
 
-   .. figure:: images/4.png
+   .. figure:: images/rac11.png 
