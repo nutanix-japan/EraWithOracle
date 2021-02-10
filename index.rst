@@ -19,6 +19,7 @@
   :hidden:
 
   era_rest_api/era_rest_api
+  deploy_oracle_rac_era/deploy_oracle_rac_era
 
 .. toctree::
   :maxdepth: 2
@@ -27,7 +28,7 @@
   :hidden:
 
   appendix/glossary
-..  tools_vms/windows_tools_vm
+  tools_vms/windows_tools_vm
   tools_vms/linux_tools_vm
 
 
