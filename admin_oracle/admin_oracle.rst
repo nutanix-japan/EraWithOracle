@@ -4,24 +4,20 @@
 DB Administration with Era
 --------------------------
 
-We will now see how to perform normal database admin task with Era.
-
-**In this lab you will Administor your ORACLE DB**
+**In this lab you will Administer your ORACLE DB**
 
 Explore Your Database
 ++++++++++++++++++++++
 
 #. In **Era**, select **Databases** from the dropdown menu and **Sources** from the lefthand menu.
 
-   .. figure:: images/1.png
-
-#. Click into your *Initials*\ **-proddb**, this will take you back into the Database Summary page. This page provides details of the Database, Database Server access, Time Machine schedule, Compute/Network/Software profiles used to provision.
+#. Click into your *Initials*\ _proddb, this will take you back into the Database Summary page. This page provides details of the Database, Database Server access, Time Machine schedule, Compute/Network/Software profiles used to provision.
 
     - **Database Summary:**
 
     .. figure:: images/2.png
 
-    - **Database Server:**
+    - **Database Server VM:**
 
     .. figure:: images/3.png
 
@@ -33,22 +29,18 @@ Explore Your Database
 
     .. figure:: images/5.png
 
-Snapshot Your Database
-++++++++++++++++++++++
+Recovering From Snapshot
+++++++++++++++++++++++++
 
-Before we take a manual snapshot of our Database, lets write a new table into our ProdDB.
+Before we take a manual snapshot of our database, let's write a new table into our *Initials*\ _proddb database.
 
 Write New Table Into Database
 .............................
 
-#. SSH (Terminal/Putty) into your *Initials*\ -proddb VM
+#. SSH (Terminal/Putty) into your *UserXX*\ **-Oracle19cSource** VM
 
    - **User Name** - oracle
    - **Password** - Nutanix/4u
-
-   .. code-block:: Bash
-
-     ssh oracle@PRODDB IP
 
 #. Launch **sqlplus**
 
@@ -78,48 +70,38 @@ Write New Table Into Database
 Take Manual Snapshot of Database
 ................................
 
-#. In **Era**, select **Databases** from the dropdown menu and **Sources** from the lefthand menu.
+#. Within **Era**, select **Databases** from the dropdown menu, and then **Sources** from the left-hand menu.
 
-#. Click on the Time Machine for your Database *Initials*\ -proddb_TM
+#. Click on the Time Machine for your Database *Initials*\ _proddb_TM.
 
    .. figure:: images/6.png
 
-#. Click **Actions > Log Catch Up**.
+#. Click **Yes**. This should take approximately 2-3 minutes to complete.
 
-   .. figure:: images/12.png
+#. Click **Actions > Snapshot**. Enter *Initials*\ _proddb-1st-Snapshot as the *Snapshot Name*, and click **Create**.
 
-#. Click **Yes*
-
-#. Once that is complete, click **Actions > Snapshot**.
-
-   .. Figure:: images/7.png
-
-   - **Snapshot Name** - *Initials*\ -proddb-1st-Snapshot
-
-   .. Figure:: images/8.png
-
-#. Click **Create**
+   .. figure:: images/7.png
 
 #. Select **Operations** from the dropdown menu to monitor the registration. This process should take approximately 2-5 minutes.
 
 Clone Your Database Server & Database
 +++++++++++++++++++++++++++++++++++++
 
-#. In **Era**, select **Time Machines** from the dropdown menu and select *Initials*\ -proddb_TM
+#. Within **Era**, select **Time Machines** from the dropdown menu, and then select *Initials*\ _proddb_TM.
 
-#. Click **Actions > Clone Database**.
+#. Click **Actions > Create Single Instance Database Clone**.
 
-   - **Snapshot** - *Initials*\ -proddb-1st-Snapshot (Date Time)
+#. Click the radio button for *Snapshot*, and choose the entry for *Initials*\ proddb-1st-Snapshot (Date Time). Click **Next**.
 
    .. figure:: images/9.png
 
-#. Click **Next**
+#. Fill out the following fields, and click **Next**.
 
-   - **Database Server** - Create New Server
-   - **Database Server Name** - *Initials*\ _oracle_prod_Clone1
+   - **Database Server VM** - Create New Server
+   - **Database Server VM Name** - *Initials*\ _oracle_prod_Clone1
    - **Compute Profile** - ORACLE_SMALL
    - **Network Profile** - Primary-ORACLE-Network
-   - **SSH Public Key Through** - Select **Text**
+   - **SSH Public Key Through** - Select **Text**. Copy and paste the following into the text box.
 
    ::
 
@@ -127,56 +109,52 @@ Clone Your Database Server & Database
 
    .. figure:: images/10.png
 
-#. Click **Next**
+#. Fill out the following fields, and click **Next**.
 
-   - **Clone Name** - *Initials*\ _proddb_Clone1
+   - **Name** - *Initials*\ _proddb_Clone1
    -  **SID** - *Initials*\ prod
    -  **SYS and SYSTEM Password** - Nutanix/4u
    -  **Database Parameter Profile** - ORACLE_SMALL_PARAMS
 
    .. figure:: images/11.png
 
-#. Click **Clone**
+#. Click **Clone**.
 
 #. Select **Operations** from the dropdown menu to monitor the registration. This process should take approximately 30-50 minutes.
 
 Delete Table and Clone Refresh
 ++++++++++++++++++++++++++++++
 
-There are times when a table or other data gets deleted (by accident), and you would like to get it back. here we will delete a table and use the Era Clone Refresh action from the last snapshot we took.
+There are times when a table or other data gets deleted (accidentally or maliciously), and you would like to recover it. Here we will delete a table, and then use the Era *Clone Refresh* action from the last snapshot to restore it.
 
 Delete Table
 ............
 
-#. SSH (Terminal/Putty) into your *Initials*\ -proddb_Clone1 VM
+#. SSH (Terminal/Putty) into your *Initials*\ _proddb_Clone1 VM
 
    - **User Name** - oracle
    - **Password** - Nutanix/4u
 
-   .. code-block:: Bash
-
-     ssh oracle@PRODDB_Clone1 IP
-
 #. Launch **sqlplus**
 
-     .. code-block:: Bash
+   .. code-block:: Bash
 
-       sqlplus / as sysdba
+     sqlplus / as sysdba
 
 #. Execute the following to Drop the table:
 
-     .. code-block:: Bash
+   .. code-block:: Bash
 
-       DROP TABLE testlabtable;
+     DROP TABLE testlabtable;
 
 #. Verify the table is gone by executing the following to list the table:
 
-     .. code-block:: Bash
+   .. code-block:: Bash
 
-       select owner as schema_name,
-       table_name
-       from sys.all_tables
-       where table_name like 'TEST%';
+     select owner as schema_name,
+     table_name
+     from sys.all_tables
+     where table_name like 'TEST%';
 
 Clone Refresh
 .............
@@ -194,7 +172,7 @@ Clone Refresh
 Verify Table is Back
 ....................
 
-#. SSH (Terminal/Putty) into your *Initials*\ -proddb_Clone1 VM
+#. SSH (Terminal/Putty) into your *Initials*\ _proddb_Clone1 VM
 
    - **User Name** - oracle
    - **Password** - Nutanix/4u
@@ -205,18 +183,15 @@ Verify Table is Back
 
 #. Launch **sqlplus**
 
-     .. code-block:: Bash
+   .. code-block:: Bash
 
-       sqlplus / as sysdba
+     sqlplus / as sysdba
 
 #. Verify the table is back by executing the following to list the table:
 
-     .. code-block:: Bash
+   .. code-block:: Bash
 
-       select owner as schema_name,
-       table_name
-       from sys.all_tables
-       where table_name like 'TEST%';
-
-Takeaways
-+++++++++
+     select owner as schema_name,
+     table_name
+     from sys.all_tables
+     where table_name like 'TEST%';

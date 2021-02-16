@@ -249,7 +249,7 @@ In this section we will create Era compute profile which we will use to deploy O
 
    .. figure:: images/rac7.png
 
-Create Oracle RAC Database Profile
+Create Oracle RAC Compute Profile
 ++++++++++++++++++++++++++++++++++++
 
 In this section we will create Era database profile which we will use to deploy Oracle RAC database servers. This would
@@ -291,7 +291,7 @@ Now that we have all the building blocks (profiles) necessary for creating a Ora
    - **Database Server VM Name Prefix** - XYZRAC
    - **Software Profile** - XYZ_ORACLE_RAC_SOFTWARE_PROFILE
    - **Compute Profile** - XYZ_ORACLE_RAC_COMPUTE
-   - **SYS ASM Password** - (desired password)
+   - **SYS ASM Password** - Nutanix#4u
    - **ASM Driver** - None
    - **SSH Public Key for Node Access** - Select **Text** and paste the following public key
 

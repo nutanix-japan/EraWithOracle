@@ -4,25 +4,53 @@
 Patching Oracle with Era
 ------------------------
 
-Maintaining consistent patch levels across database servers in a traditional environment can be a very difficult process. Era makes this simple by providing a means of database engine patching through versioned software profiles. Groups of database servers can be patched or rolled back through Era using the web interface, or via CLI or API.
+Maintaining consistent patch levels across database servers in a traditional environment can be a very difficult, and time-consuming process. Each quarter, Oracle releases a grouping of patches referred to as Patch Set Updates (PSU). Era makes this simple by providing a means of patching via software profiles. Individual or groups of database servers can be patched, or rolled back through Era, using the web interface, CLI, or API.
 
-Each quarter, Oracle releases a grouping of patches referred to as a PSU. **In this lab you will walk through the deployment and patching of both Oracle and Grid software for an Oracle 19c database using Era.**
+**In this lab you will walk through the deployment and patching of both Oracle and Grid software for an Oracle 19c database using Era.**
 
-Patching Base Oracle VM
+Clone Oracle VM
++++++++++++++++++++++
+
+**In this lab you will deploy a Oracle VM, by cloning a source Oracle 19c Source VM. This VM will act as a master image to create a profile for deploying additional Oracle VMs using Era.**
+
+This VM is running Oracle 19c with April PSU patches applied.
+
+#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > VMs**.
+
+   .. figure:: images/1.png
+
+#. Select the checkbox for *UserXX*\ **-Oracle19cSource**, and click **Actions > Clone**.
+
+   .. figure:: images/1b.png
+
+#. Fill out the following fields:
+
+   - **Number Of Clones** - 1
+   - **Name** - *UserXX*\ **-Oracle19cSource-Patched**
+   - **Description** - (Optional) Description for your VM.
+   - **vCPU(s)** - 2
+   - **Number of Cores per vCPU** - 1
+   - **Memory** - 8 GiB
+
+#. Click **Save** to create the VM.
+
+#. Select VM and click **Actions > Power On**.
+
+Patching Oracle VM
 +++++++++++++++++++++++
 
 In this exercise, you will apply the October PSU patches to your manually cloned VM, register the database server with Era, and then use it as the basis for creating a new version of your *Initials*\ **_ORACLE_19C** Software Profile.
 
-#. In **Prism Central**, note the IP address of your *Initials*\ **_oracle_patched** VM.
+#. Within **Prism Central**, note the IP address of your *Initials*\ **-Oracle19cSource-Patched** VM.
 
-#. Connect to your *Initials*\ **_oracle_patched** VM via SSH using the following credentials:
+#. SSH to your *Initials*\ **-Oracle19cSource-Patched** VM using the following credentials:
 
    - **User Name** - root
    - **Password** - Nutanix/4u
 
 #. Execute the following script to download and install the Oracle and Grid October PSU patches:
 
-    .. code-block:: bash
+   .. code-block:: bash
 
       cd Downloads
       ./applypsu.sh
@@ -35,12 +63,15 @@ In this exercise, you will apply the October PSU patches to your manually cloned
 
    .. figure:: images/8.png
 
-#. Once the script has finished, return to **Era > Database Servers > List**.
+Registering Oracle VM
++++++++++++++++++++++++++++++++
+
+#. Once the scripts have finished, return to **Era > Database Server VMs > List**.
 
 #. Click **+ Register** and fill out the following **Database Server** fields:
 
    - **Engine** - Oracle
-   - **IP Address or Name of VM** - *UserXX*\ **-MSSQLSourceVM-Patched**
+   - **IP Address or Name of VM** - *UserXX*\ **-Oracle19cSource-Patched**
    -  **Database Version** - 19.0.0.0
    - **Era Drive User** - oracle
    - **Oracle Database Home** - /u02/app/oracle/product/19.0.0/dbhome_1
@@ -54,6 +85,9 @@ In this exercise, you will apply the October PSU patches to your manually cloned
 
 #. Monitor the progress on the **Operations** page. This process should take approximately 5 minutes.
 
+Creating Software Profile with Updates
+++++++++++++++++++++++++++++++++++++++++
+
 #. Once registration completes, select **Era > Profiles > Software** and click your *Initials*\ **_ORACLE_19C** Software Profile. Observe that Era provides complete introspection into the packages installed within the operating system, including the **Database Software** and **Grid Software**. Note the **Patches Found** under **Database Software**.
 
    .. figure:: images/10.png
@@ -65,7 +99,7 @@ In this exercise, you will apply the October PSU patches to your manually cloned
 #. Fill out the following fields and click **Create**:
 
    - **Name** - *Initials*\ _ORACLE_19C (Oct19 PSU)
-   - Select *Initials*\ **_oracle_patched**
+   - Select *UserXX*\ **-Oracle19cSource-Patched**
 
    .. figure:: images/11.png
 
@@ -87,7 +121,7 @@ In this exercise, you will apply the October PSU patches to your manually cloned
 
    .. figure:: images/14.png
 
-#. Return to **Era > Database Servers > List** and click your *Initials*\ **_oracle_prod** database server.
+#. Return to **Era > Database Server VMs > List** and click your *Initials*\ **_oracle_prod** database server.
 
 #. Under **Profiles**, note that the newer, published software profile is being recommended as an available update to the database server. Click **Update**.
 
@@ -116,7 +150,7 @@ In this exercise, you will apply the October PSU patches to your manually cloned
 
    ::
 
-      $ORACLE_HOME/OPatch/opatch lsinventory | egrep 'appl|desc'
+    $ORACLE_HOME/OPatch/opatch lsinventory | egrep 'appl|desc'
 
    .. figure:: images/19.png
 

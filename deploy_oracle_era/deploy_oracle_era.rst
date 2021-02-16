@@ -4,20 +4,15 @@
 Deploying Oracle with Era
 -------------------------
 
-Each quarter, Oracle releases a grouping of patches referred to as a PSU. **In this lab you will walk through the deployment and patching of both Oracle and Grid software for an Oracle 19c database using Era.**
-
 Create Oracle Server with Era
 +++++++++++++++++++++++++++++
 
 In this exercise you will deploy a fresh Oracle database using your *Initials*\ **_ORACLE_19C** 1.0 Software Profile.
 
-#. Select **Databases** from the dropdown menu and **Sources** from the lefthand menu.
+#. Select **Databases** from the dropdown menu, and then **Sources** from the left-hand menu.
 
-#. Click **+ Provision > Single Node Database**.
+#. Click **+ Provision > Oracle > Single Instance Database** and fill out the following fields:
 
-#. In the **Provision a Database** wizard, fill out the following fields to configure the Database Server:
-
-   - **Engine** - Oracle
    - **Database Server** - Create New Server
    - **Database Server Name** - *Initials*\ _oracle_prod
    - **Description** - (Optional)
@@ -25,8 +20,8 @@ In this exercise you will deploy a fresh Oracle database using your *Initials*\ 
    - **Compute Profile** - ORACLE_SMALL
    - **Network Profile** - Primary_ORACLE_NETWORK
    - Select **Enable High Availability**
-   - **SYS ASM Password** - oracle
-   - **SSH Public Key for Node Access** - Select **Text**
+   - **SYS ASM Password** - Nutanix#4u
+   - **SSH Public Key for Node Access** - Select **Text** and copy and paste the below into the *Text* box.
 
    ::
 
@@ -57,7 +52,8 @@ In this exercise you will deploy a fresh Oracle database using your *Initials*\ 
       - Scripts to update DNS/IPAM
       - Scripts to automate application setup, such as app-level cloning for Oracle PeopleSoft
 
-      **Encryption** can be used in situations where compliance requires encryption and stops would-be attackers from bypassing the database and reading sensitive information directly from storage by enforcing data-at-rest encryption in the database layer.
+
+      Additonally, by enforcing data-at-rest encryption in the database layer can prevent would-be attackers from bypassing the database, and reading sensitive information directly from storage.
 
 #. Click **Next** and fill out the following fields to configure the Time Machine for your database:
 
@@ -68,8 +64,8 @@ In this exercise you will deploy a fresh Oracle database using your *Initials*\ 
 
    .. figure:: images/6.png
 
-#. Click **Provision** to begin creating your new database server VM and *Initials*\ **_proddb** database.
+#. Click **Provision** to begin creating your new database server VM containing your *Initials*\ _proddb database.
 
-#. Select **Operations** from the dropdown menu to monitor the provisioning. This process should take approximately 60 minutes (depending on your cluster configuration).
+#. Select **Operations** from the dropdown menu to monitor the provisioning.
 
-#. Please proceed to the following exercises while the database is being provisioned.
+#. Proceed to the following exercises only after the database has completed provisioning. This process should take approximately 30 minutes.

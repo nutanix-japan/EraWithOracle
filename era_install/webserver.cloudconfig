@@ -1,0 +1,118 @@
+#cloud-config
+
+users:
+  - name: centos
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+chpasswd:
+  list: |
+    root:nutanix/4u
+    centos:nutanix/4u
+  expire: False
+ssh_pwauth: True
+
+write_files:
+        - path: /etc/systemd/system/fiesta.service
+          permissions: 0744
+          owner: root
+          content: |
+            [Service]
+
+            ExecStart=/usr/bin/node /home/centos/Fiesta/index.js
+            Restart=always
+            RestartSec=2s
+
+            StandardOutput=syslog
+            StandardError=syslog
+
+            SyslogIdentifier=fiesta
+
+            User=root
+            Group=root
+
+            Environment=NODE_ENV=production PORT=5001
+
+            [Install]
+            WantedBy=multi-user.target'
+        - path: /etc/nginx/nginx.conf
+          permissions: 0744
+          owner: root
+          content: |
+            user nginx;
+            worker_processes auto;
+            error_log /var/log/nginx/error.log;
+            pid /run/nginx.pid;
+            # Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+            include /usr/share/nginx/modules/*.conf;
+            events {
+                worker_connections 1024;
+            }
+            http {
+                log_format  main  '\$remote_addr - \$remote_user [\$time_local] \"\$request\" '
+                                  '\$status \$body_bytes_sent \"\$http_referer\" '
+                                  '\"\$http_user_agent\" \"\$http_x_forwarded_for\"';
+                access_log  /var/log/nginx/access.log  main;
+                sendfile            on;
+                tcp_nopush          on;
+                tcp_nodelay         on;
+                keepalive_timeout   65;
+                types_hash_max_size 2048;
+                include             /etc/nginx/mime.types;
+                default_type        application/octet-stream;
+                # Load modular configuration files from the /etc/nginx/conf.d directory.
+                # See http://nginx.org/en/docs/ngx_core_module.html#include
+                # for more information.
+                include /etc/nginx/conf.d/*.conf;
+                server {
+                    listen       80 default_server;
+                    listen       [::]:80 default_server;
+                    server_name  _;
+                    root         /usr/share/nginx/html;
+                    # Load configuration files for the default server block.
+                    include /etc/nginx/default.d/*.conf;
+                    location / {
+                    proxy_pass http://127.0.0.1:5001;
+                    proxy_http_version 1.1;
+                    proxy_set_header Upgrade \$http_upgrade;
+                    proxy_set_header Connection 'upgrade';
+                    proxy_set_header Host \$host;
+                    proxy_cache_bypass \$http_upgrade;
+                    }
+                    error_page 404 /404.html;
+                        location = /40x.html {
+                    }
+                    error_page 500 502 503 504 /50x.html;
+                        location = /50x.html {
+                    }
+                }
+            }
+
+runcmd:
+ - systemctl stop firewalld
+ - systemctl disable firewalld
+# - yum update -y
+ - curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+ - yum install -y install wget git vim gcc gcc-c++ nginx nodejs
+ - git clone https://github.com/sharonpamela/Fiesta.git /home/centos/Fiesta
+ - cd /home/centos/Fiesta
+ - npm install
+ - cd /home/centos/Fiesta/client
+ - npm install
+ - npm run build
+ - npm install nodemon concurrently
+# ** The below two entries have been modified for use exclusively in the SE POC Workshop. Please be aware before using it for any other purpose. **
+ - sed -i 's/REPLACE_DB_NAME/fiestadb_prod/g' /home/centos/Fiesta/config/config.js
+# ** ONLY UPDATE THE >> YOUR-FIESTADB_PROD-VM-IP-ADDRESS << PORTION IN THE BELOW LINE BEFORE SAVING YOUR VM - DO NOT MODIFY ANY OTHER LINES**
+ - sed -i 's/REPLACE_DB_HOST_ADDRESS/YOUR-FIESTADB_PROD-VM-IP-ADDRESS/g' /home/centos/Fiesta/config/config.js
+# ** ONLY UPDATE THE ABOVE LINE - DO NOT MODIFY ANY OTHER LINES **
+ - sed -i 's/REPLACE_DB_DIALECT/mssql/g' /home/centos/Fiesta/config/config.js
+ - sed -i 's/REPLACE_DB_DOMAIN_NAME/ntnxlab.local/g' /home/centos/Fiesta/config/config.js
+ - sed -i 's/REPLACE_DB_USER_NAME/administrator/g' /home/centos/Fiesta/config/config.js
+ - db_password='nutanix/4u'
+ - db_escaped_pass="${db_password//\//\\/}"
+ - sed -i "s/REPLACE_DB_PASSWORD/`echo $db_escaped_pass`/g" /home/centos/Fiesta/config/config.js
+ - systemctl daemon-reload
+ - systemctl start fiesta
+ - systemctl enable fiesta
+ - setenforce Permissive
+ - systemctl start nginx
+ - systemctl enable nginx

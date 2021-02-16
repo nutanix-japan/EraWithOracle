@@ -1,14 +1,14 @@
 .. _labsetup:
 
 ----------------------
-Oracle Lab Setup
+Lab Setup
 ----------------------
 
 Welcome to the Databases bootcamp. This bootcamp is meant to provide you with first hand experience in why Nutanix is an ideal platform for Database workloads.
 
-Historically, it has been a challenge to virtualize Oracle because of the high cost of traditional virtualization stacks and the impact that a SAN-based architecture can have on performance. Businesses and their IT departments have constantly fought to balance cost, operational simplicity, and consistent predictable performance.
+Historically, it has been a challenge to virtualize SQL Server because of the high cost of traditional virtualization stacks and the impact that a SAN-based architecture can have on performance. Businesses and their IT departments have constantly fought to balance cost, operational simplicity, and consistent predictable performance.
 
-The Nutanix Enterprise Cloud removes many of these challenges and makes virtualizing a business-critical application such as Oracle much easier. The Acropolis Distributed Storage Fabric (DSF) is a software-defined solution that provides all the features one typically expects in an enterprise SAN, without a SAN’s physical limitations and bottlenecks. Oracle particularly benefits from the following DSF features:
+The Nutanix Enterprise Cloud removes many of these challenges and makes virtualizing a business-critical application such as SQL Server much easier. The Acropolis Distributed Storage Fabric (DSF) is a software-defined solution that provides all the features one typically expects in an enterprise SAN, without a SAN’s physical limitations and bottlenecks. SQL Server particularly benefits from the following DSF features:
 
 - Localized I/O and the use of flash for index and key database files to lower operation latency.
 - A highly distributed approach that can handle both random and sequential workloads.
@@ -34,36 +34,35 @@ Maintaining the status quo leads to inefficient usage of both storage and worse,
 Nutanix Era provides DBaaS for your Enterprise Cloud. Leveraging the Nutanix Enterprise Cloud OS, we are able to take advantage of the power of full stack - data, compute, and software. Nutanix Era hides the complexity of database operations and provides common APIs, CLI, and consumer-grade GUI experience for multiple database engines. It makes database operations such as cloning efficient, thereby driving down the TCO of database management for our customers.
 
 
+Configuring a Project
++++++++++++++++++++++
 
-..  Configuring a Project
-  +++++++++++++++++++++
+In this lab you will leverage multiple pre-built Calm Blueprints to provision your applications...
 
-  In this lab you will leverage multiple pre-built Calm Blueprints to provision your applications...
+#. In **Prism Central**, select :fa:`bars` **> Services > Calm**.\
 
-  #. In **Prism Central**, select :fa:`bars` **> Services > Calm**.\
+#. Select **Projects** from the lefthand menu and click **+ Create Project**.
 
-  #. Select **Projects** from the lefthand menu and click **+ Create Project**.
+   .. figure:: images/2.png
 
-     .. figure:: images/2.png
+#. Fill out the following fields:
 
-  #. Fill out the following fields:
+   - **Project Name** - *Initials*\ -Project
+   - Under **Users, Groups, and Roles**, select **+ User**
+      - **Name** - Administrators
+      - **Role** - Project Admin
+      - **Action** - Save
+   - Under **Infrastructure**, select **Select Provider > Nutanix**
+   - Click **Select Clusters & Subnets**
+   - Select *Your Assigned Cluster*
+   - Under **Subnets**, select **Primary**, **Secondary**, and click **Confirm**
+   - Mark **Primary** as the default network by clicking the :fa:`star`
 
-     - **Project Name** - *Initials*\ -Project
-     - Under **Users, Groups, and Roles**, select **+ User**
-        - **Name** - Administrators
-        - **Role** - Project Admin
-        - **Action** - Save
-     - Under **Infrastructure**, select **Select Provider > Nutanix**
-     - Click **Select Clusters & Subnets**
-     - Select *Your Assigned Cluster*
-     - Under **Subnets**, select **Primary**, **Secondary**, and click **Confirm**
-     - Mark **Primary** as the default network by clicking the :fa:`star`
+   .. figure:: images/3.png
 
-     .. figure:: images/3.png
+#. Click **Save & Configure Environment**.
 
-  #. Click **Save & Configure Environment**.
-
-  Deploying a Windows Tools VM
+..  Deploying a Windows Tools VM
   ++++++++++++++++++++++++++++
 
   Some exercises in this track will depend on leveraging the Windows Tools VM. Follow the below steps to provision your personal VM from a disk image.
