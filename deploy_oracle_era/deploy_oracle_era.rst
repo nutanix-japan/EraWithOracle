@@ -38,7 +38,7 @@ In this exercise you will deploy a fresh Oracle database using your *Initials*\ 
 
    -  **Database Name** - *Initials*\ _proddb
    -  **SID** - *Initials*\ prod
-   -  **SYS and SYSTEM Password** - Nutanix/4u
+   -  **SYS and SYSTEM Password** - Nutanix#4u
    -  **Database Parameter Profile** - ORACLE_SMALL_PARAMS
 
    .. figure:: images/5.png
