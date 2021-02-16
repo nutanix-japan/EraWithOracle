@@ -249,10 +249,11 @@ In this section we will create Era compute profile which we will use to deploy O
 
    .. figure:: images/rac7.png
 
-Create Oracle RAC Compute Profile
+
+Create Oracle RAC Database Profile
 ++++++++++++++++++++++++++++++++++++
 
-In this section we will create Era database profile which we will use to deploy Oracle RAC database servers. This would
+In this section we will create Era database parameters profile which we will use to deploy Oracle RAC database servers. This would
 
 #. In Era Menu, select **Profiles**
 
