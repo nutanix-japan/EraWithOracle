@@ -10,7 +10,31 @@ Traditional database VM deployment resembles the diagram below. The process gene
 
 Whereas with a Nutanix cluster and Era, provisioning and protecting a database should take you no longer than it took to read this intro.
 
-.. note::
+Source Oracle VM
+++++++++++++++++++++++
+
+**In this lab you will deploy a Oracle VM, by cloning a source Oracle 19c Source VM. This VM will act as a master image to create a profile for deploying additional Oracle VMs using Era.**
+
+This VM is running Oracle 19c with April PSU patches applied.
+
+#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > VMs**.
+
+   .. figure:: images/1.png
+
+#. Select the checkbox for *UserXX*\ **-Oracle19cSource**, and click **Actions > Clone**.
+
+   .. figure:: images/1b.png
+
+#. Fill out the following fields:
+
+   - **Number Of Clones** - 1
+   - **Name** - *UserXX*\ **-Oracle19cSourceVM-Patched**
+   - **Description** - (Optional) Description for your VM.
+   - **vCPU(s)** - 2
+   - **Number of Cores per vCPU** - 1
+   - **Memory** - 8 GiB
+
+#. Click **Save** to create the VM.
 
   During this workshop, if you receive any errors when inputting information, that may be a result of copying and pasting into that particular screen. Please attempt to manually type in the same information, and proceed
 
@@ -55,7 +79,19 @@ In this exercise, you will register your Oracle VM to Era.
 
 #. Click **+ Register > Oracle**, fill out the following fields, and click **Register**.
 
-   - **IP Address or Name of VM** - *UserXX*\ **-Oracle19cSource**
+   .. figure:: images/9.png
+
+Register Oracle Server with Era
++++++++++++++++++++++++++++++++
+
+In this exercise, you will register your April PSU VM and register it as version 1.0 of your Oracle 19c Software Profile. The Software Profile is a template containing both the operating system and database software, and can be used to deploy additional database servers.
+
+#. In **Era**, select **Database Servers** from the dropdown menu and **List** from the lefthand menu.
+
+#. Click **+ Register** and fill out the following **Database Server** fields:
+
+   - **Engine** - Oracle
+   - **IP Address or Name of VM** - *UserXX*\ **-Oracle19cSourceVM**
    - **Database Version** - 19.0.0.0
    - **Era Drive User** - oracle
    - **Oracle Database Home** - /u02/app/oracle/product/19.0.0/dbhome_1
@@ -97,7 +133,7 @@ Once the base *UserXX*\ **-Oracle19cSource** VM has been registered within Era, 
 
    - **Name** - *Initials*\ _ORACLE_19C
    - **Description** - (Optional)
-   - **Database Server** - Select your registered *UserXX*\ **-Oracle19cSource**
+   - **Database Server** - Select your registered *UserXX*\ **-Oracle19cSourceVM**
 
 #. Click **Next > Create**.
 
@@ -113,7 +149,7 @@ Register Database with Era
 #. Click **+ Register > Oracle > Single Instance Database** and fill out the following fields:
 
    - **Database is on a Server that is:** - Registered
-   - **Registered Database Servers** - Select your registered *UserXX*\ **-Oracle19cSource**
+   - **Registered Database Servers** - Select your registered *UserXX*\ **-Oracle19cSourceVM**
 
 #. Click **Next**.
 
